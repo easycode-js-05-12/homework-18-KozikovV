@@ -1,11 +1,9 @@
-import { ActiveRoute } from '../core/active.route.service';
 import { NewsService } from '../services/news.service';
 import { AuthService } from '../services/auth.service';
 
 export class NewsComponent {
     constructor() {
         this._newsServise =  new NewsService();
-        this._activeRoute = new ActiveRoute();
         this._authService = new AuthService();
         
         
@@ -33,7 +31,7 @@ export class NewsComponent {
                         </div>
                         <div class="card-body d-flex flex-column justify-content-center align-items-center">
                             <p class="card-text">Uploaded ${this._news[0].pictures.length} photos</p>
-                            <p> a [calc day] day ago</p>
+                            <p> a ${this._calcDay(this._news[0].date)} day ago</p>
                             <button href="#" class="btn btn-bg-light align-self-center btn-border-gradient" style="color: #fff;
                             background: linear-gradient(to right,#7303c0 0,#ec38bc 76%,#fa66cb 100%)">Follow</button>
                         </div>
@@ -89,6 +87,15 @@ export class NewsComponent {
 
     afterRender() {
 
+    }
+
+    _calcDay(date) {
+        let start = new Date();
+        let end = new Date(date);
+
+        let dayAgo = Math.floor((start - end) / (1000 * 60 * 60 * 24))
+
+        return dayAgo;
     }
 
 
