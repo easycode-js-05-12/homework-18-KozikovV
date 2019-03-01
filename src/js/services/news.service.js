@@ -7,10 +7,7 @@ export class NewsService {
         const http = new Http();
         return new Promise((resolve, reject) => {
             http.getNews(`${ENV.apiUrl}/public/news`, token)
-            .then((response) => {
-                console.log(response.news);
-                resolve(response.news);
-            })
+            .then((response) => resolve(response.news))
             .catch((error) => reject(error));
         });
     }

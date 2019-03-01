@@ -7,7 +7,7 @@ export class HomeService {
 
         return new Promise((resolve, reject) => {
             http.get(`${ENV.apiUrl}/public/home`)
-                .then((response) => {console.log(response); resolve(response)})
+                .then((response) => resolve(response))
                 .catch(err => reject(err));
         });
     }

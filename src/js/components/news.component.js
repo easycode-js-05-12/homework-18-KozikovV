@@ -31,7 +31,7 @@ export class NewsComponent {
                         </div>
                         <div class="card-body d-flex flex-column justify-content-center align-items-center">
                             <p class="card-text">Uploaded ${this._news[0].pictures.length} photos</p>
-                            <p> a ${this._calcDay(this._news[0].date)} day ago</p>
+                            <p>${this._calcDay(this._news[0].date)}</p>
                             <button href="#" class="btn btn-bg-light align-self-center btn-border-gradient" style="color: #fff;
                             background: linear-gradient(to right,#7303c0 0,#ec38bc 76%,#fa66cb 100%)">Follow</button>
                         </div>
@@ -95,7 +95,7 @@ export class NewsComponent {
 
         let dayAgo = Math.floor((start - end) / (1000 * 60 * 60 * 24))
 
-        return dayAgo;
+        return dayAgo > 0 ? `a ${dayAgo} day ago` : 'today';
     }
 
 
