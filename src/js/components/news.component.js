@@ -6,12 +6,13 @@ export class NewsComponent {
         this._newsServise =  new NewsService();
         this._authService = new AuthService();
         
-        
+        this._newsView
         this._news;
     }
 
     async beforeRender() {
         this._news = await this._newsServise.getNews(this._authService.token);
+        this._newsView = this._news.map((news) => this._createNewsView(news));
     }
 
     render() {
@@ -20,26 +21,7 @@ export class NewsComponent {
             <style>
                 ${this.style()}
             </style>
-            <div class="news__item p-4 d-flex align-items-center">
-                <div class="col-4">
-                    <div class="news__content d-flex flex-column justify-content-center align-items-center">
-                        <div class="news__title">
-                            <div class="news__user">
-                                <img src="${this._news[0].owner.avatar}" alt="avatar">
-                            </div>
-                            <h5 class="card-title">${this._news[0].owner.full_name}</h5>
-                        </div>
-                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                            <p class="card-text">Uploaded ${this._news[0].pictures.length} photos</p>
-                            <p>${this._calcDay(this._news[0].date)}</p>
-                            <button href="#" class="btn btn-bg-light align-self-center btn-border-gradient" style="color: #fff;
-                            background: linear-gradient(to right,#7303c0 0,#ec38bc 76%,#fa66cb 100%)">Follow</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-8">
-                    <img src="${this._news[0].pictures[0].url}" class="" alt="Uploaded image">
-                </div>
+            ${this._newsView.join('')}
             </div>
         `;
     }
@@ -68,9 +50,19 @@ export class NewsComponent {
                 margin: 0 auto;
                 background-color: grey;
                 height: 368px;
+                overflow: hidden;
+
+            }
+            .main-image {
+                overflow: hidden;
             }
             .col-4 {
                 padding: 0;
+            }
+
+            .col-8 {
+                padding: 25px;
+                overflow: hidden;
             }
             .news__user {
                 border-radius: 50%;
@@ -98,5 +90,32 @@ export class NewsComponent {
         return dayAgo > 0 ? `a ${dayAgo} day ago` : 'today';
     }
 
+    _createNewsView(news) {
+        return `
+        <div class="news__item p-4 d-flex align-items-center mb-3">
+                <div class="col-4">
+                    <div class="news__content d-flex flex-column justify-content-center align-items-center">
+                        <div class="news__title">
+                            <div class="news__user">
+                                <img src="${news.owner.avatar}" alt="avatar">
+                            </div>
+                            <h5 class="card-title">${news.owner.full_name}</h5>
+                        </div>
+                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                            <p class="card-text">Uploaded ${news.pictures.length} photos</p>
+                            <p>${this._calcDay(news.date)}</p>
+                            <button href="#" class="btn btn-bg-light align-self-center btn-border-gradient" style="color: #fff;
+                            background: linear-gradient(to right,#7303c0 0,#ec38bc 76%,#fa66cb 100%)">Follow</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="main-image">
+                        <img src="${news.pictures[0].url}" alt="Uploaded image">
+                    </div>
+                </div>
+            </div>
+        `;
+    }
 
 }
