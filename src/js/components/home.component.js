@@ -5,12 +5,18 @@ export class HomeComponent {
     async beforeRender() {
         
     }
+
     render() {
-        return `
-            <div>Home</div>
-        `;
+        return this._container();
     }
+
     afterRender() {
         
+    }
+
+    _container() {
+        return `
+        <div>News page</div>
+        `;
     }
 } 

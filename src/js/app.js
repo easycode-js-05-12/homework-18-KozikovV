@@ -3,11 +3,13 @@ import { HomeComponent } from './components/home.component';
 import { NotFoundComponent } from './components/notfound.component';
 import { UserComponent } from './components/user.component';
 import { ActiveRoute } from './core/active.route.service';
+import { NewsComponent } from './components/news.component';
 
 const routes = {
     '/': new HomeComponent(),
     '/login': new LoginComponent(),
     '/users/:id': new UserComponent(),
+    '/news': new NewsComponent(),
     '**': new NotFoundComponent()
 };
 
